@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Focus 🎯</title>
+    <style>
+        :root {
+            --powder-pink: #F8BBD0;
+            --cream-bg: #FFFBF7; 
+            --text-dark: #2C2526;  
+            --text-muted: #746264; 
+            --card-white: #FFFFFF;
+            --border-light: #EFEAE4;
+        }
+
+        body {
+            font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 4px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Highly compact container spacing with no clutter */
+        .widget-container {
+            width: 100%;
+            max-width: 440px;
+            background-color: var(--cream-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.01);
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #F3EDE6;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+        .header-title {
+            font-size: 1rem;
+            font-weight: normal;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        /* Clean Reset button link matching the header typography */
+        .btn-header-reset {
+            background: none;
+            border: none;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            opacity: 0.5;
+            padding: 2px;
+            font-family: inherit;
+            font-style: italic;
+            transition: opacity 0.2s;
+        }
+        .btn-header-reset:hover { opacity: 1; }
+
+        /* Minimal list stacking layout blocks */
+        .goals-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .goal-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--card-white);
+            border: 1px solid rgba(248, 187, 208, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.01);
+        }
+
+        .goal-number {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--powder-pink);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Clean editable input text line fields */
+        .goal-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            outline: none;
+            padding: 0;
+        }
+        .goal-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.4;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="widget-container">
+    <div class="header-row">
+        <h1 class="header-title">🎯 monthly priority focus</h1>
+        <!-- Pure text click reset trigger that will never lock inside Notion frames -->
+        <button class="btn-header-reset" onclick="clearMonthlyGoals()">🔄 reset</button>
+    </div>
+
+    <!-- Strictly limited to 3 main slots to guard against mental fatigue -->
+    <div class="goals-container">
+        <div class="goal-row">
+            <span class="goal-number">01</span>
+            <input type="text" id="goal1" class="goal-input" placeholder="tap to type main goal..." oninput="saveGoals()">
+        </div>
+        <div class="goal-row">
+            <span class="goal-number">02</span>
+            <input type="text" id="goal2" class="goal-input" placeholder="tap to type second goal..." oninput="saveGoals()">
+        </div>
+        <div class="goal-row">
+            <span class="goal-number">03</span>
+            <input type="text" id="goal3" class="goal-input" placeholder="tap to type third goal..." oninput="saveGoals()">
+        </div>
+    </div>
+</div>
+
+<script>
+    // Pure instant load sequence that never touches listeners or complex loops
+    function loadSavedGoals() {
+        try {
+            const stored = localStorage.getItem('notion_monthly_focus_v1');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                if (parsed.g1) document.getElementById('goal1').value = parsed.g1;
+                if (parsed.g2) document.getElementById('goal2').value = parsed.g2;
+                if (parsed.g3) document.getElementById('goal3').value = parsed.g3;
+            }
+        } catch(e) { console.error(e); }
+    }
+
+    function saveGoals() {
+        const goalData = {
+            g1: document.getElementById('goal1').value,
+            g2: document.getElementById('goal2').value,
+            g3: document.getElementById('goal3').value
+        };
+        try {
+            localStorage.setItem('notion_monthly_focus_v1', JSON.stringify(goalData));
+        } catch(e) { console.error(e); }
+    }
+
+    function clearMonthlyGoals() {
+        if (confirm("Clear your goals for the new month?")) {
+            document.getElementById('goal1').value = '';
+            document.getElementById('goal2').value = '';
+            document.getElementById('goal3').value = '';
+            saveGoals();
+        }
+    }
+
+    // Initialize text boxes instantly on page load
+    loadSavedGoals();
+</script>
+
+</body>
+</html>
