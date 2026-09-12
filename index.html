@@ -3,31 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monthly Focus Glass 🌸</title>
-
-    <!-- Google Fonts: Alice Serif -->
+    <title>Monthly Focus Widget 🌸</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alice&display=swap" rel="stylesheet">
-
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.80);
-            --glass-border: rgba(254, 225, 231, 0.70);
-            --glass-shadow: 0 10px 30px rgba(180, 150, 160, 0.10), 0 2px 6px rgba(0, 0, 0, 0.03);
+            --bg-top-banner: #F8D2E3;
+            --bg-body: #FFF0F3;
+            --bg-card-item: #FFFFFF;
+            --bg-pill: #FCE8F0;
+            --border-soft: #F2D3E0;
             
-            --text-dark: #332327;
-            --text-subtle: #7A6A6D;
-
-            /* Uniform Soft Pink & Berry Theme */
-            --pink-accent-bg: #FEE1E7;
-            --pink-accent-border: #F9CAD4;
-            --berry-text: #7D2D3E;
-
-            /* Uniform Card Colors */
-            --card-bg: rgba(255, 255, 255, 0.65);
-            --card-border: rgba(245, 230, 233, 0.80);
-            --card-hover-border: rgba(249, 202, 212, 0.90);
+            --text-main: #92959C;
+            --text-dark: #70737B;
+            --text-muted: #B0B3BA;
+            
+            --shadow-subtle: 0 8px 24px rgba(230, 180, 200, 0.12);
         }
 
         * {
@@ -38,613 +30,371 @@
 
         body {
             font-family: 'Alice', Georgia, serif;
-            min-height: 100vh;
+            background-color: transparent;
+            padding: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 12px;
-            background: transparent;
-            color: var(--text-dark);
+            min-height: 100vh;
+            color: var(--text-main);
             -webkit-font-smoothing: antialiased;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        .glass-widget-card {
-            position: relative;
-            z-index: 1;
+        .widget-card {
             width: 100%;
-            max-width: 490px; /* Wider but compact footprint */
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            padding: 18px 20px;
-            box-shadow: var(--glass-shadow);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            max-width: 580px;
+            background: var(--bg-body);
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .glass-widget-card:hover {
-            box-shadow: 0 14px 38px rgba(180, 150, 160, 0.14), 0 3px 10px rgba(0, 0, 0, 0.04);
+        /* Solid Header Block (#F8D2E3) */
+        .top-banner {
+            background-color: var(--bg-top-banner);
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(230, 180, 200, 0.4);
         }
 
-        /* Header Layout */
         .header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(245, 225, 228, 0.6);
-            padding-bottom: 10px;
             margin-bottom: 12px;
         }
 
         .header-title {
-            font-family: 'Alice', serif;
-            font-size: 1.02rem;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 1.5px;
             color: var(--text-dark);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-nav {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-dark);
+            font-family: 'Alice', serif;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-nav:hover {
+            background: #ffffff;
+        }
+
+        .banner-subrow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-dark);
+            font-size: 0.92rem;
+            padding-top: 4px;
+        }
+
+        .banner-left {
+            font-weight: bold;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .flower-icon {
-            font-size: 0.95rem;
-            display: inline-block;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .glass-widget-card:hover .flower-icon {
-            transform: rotate(20deg) scale(1.12);
-        }
-
-        .month-nav-group {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid var(--card-border);
-            border-radius: 7px;
-            width: 25px;
-            height: 25px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 0.8rem;
-            color: var(--text-subtle);
-            transition: all 0.2s ease;
-        }
-
-        .nav-btn:hover {
-            background: #ffffff;
-            color: var(--berry-text);
-            border-color: var(--pink-accent-border);
-        }
-
-        .banner-pink {
-            background-color: var(--pink-accent-bg);
-            color: var(--berry-text);
-            border: 1px solid var(--pink-accent-border);
-            padding: 9px 14px;
-            border-radius: 10px;
+        .banner-right {
+            font-style: italic;
+            opacity: 0.85;
             font-size: 0.85rem;
-            line-height: 1.35;
-            margin-bottom: 12px;
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Widget Main Body (#FFF0F3) */
+        .content-body {
+            background-color: var(--bg-body);
+            padding: 20px;
+        }
+
+        .priority-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .priority-item {
+            background: var(--bg-card-item);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-weight: 600;
+            gap: 12px;
+            transition: all 0.15s ease;
         }
 
-        .banner-subtitle {
-            font-size: 0.78rem;
-            opacity: 0.85;
-            font-weight: 400;
+        .priority-item:focus-within {
+            border-color: var(--bg-top-banner);
         }
 
-        .focus-slots-container {
-            display: flex;
-            flex-direction: column;
-            gap: 9px;
-            margin-bottom: 14px;
-        }
-
-        /* Uniform Card Styling */
-        .focus-item {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 9px 12px;
+        .priority-left {
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.015);
+            gap: 12px;
+            flex: 1;
         }
 
-        .focus-item:focus-within, .focus-item:hover {
-            border-color: var(--card-hover-border);
-            background-color: rgba(255, 255, 255, 0.85);
-            transform: translateY(-1px);
-            box-shadow: 0 3px 10px rgba(249, 202, 212, 0.15);
-        }
-
-        .badge-number {
-            font-family: 'Alice', serif;
-            font-size: 0.76rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 6px;
-            flex-shrink: 0;
-            user-select: none;
-            background: var(--pink-accent-bg);
-            color: var(--berry-text);
-            border: 1px solid var(--pink-accent-border);
-        }
-
-        .focus-input {
-            flex-grow: 1;
-            font-family: 'Alice', serif;
-            font-size: 0.90rem;
+        .number-pill {
+            background: var(--bg-pill);
             color: var(--text-dark);
-            background: transparent;
+            font-size: 0.82rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 8px;
+            min-width: 32px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .priority-input {
+            width: 100%;
             border: none;
             outline: none;
-            width: 100%;
-            transition: color 0.2s ease, text-decoration 0.2s ease;
-        }
-
-        .focus-input::placeholder {
-            color: rgba(122, 106, 109, 0.55);
-        }
-
-        .focus-item.completed {
-            opacity: 0.78;
-            background-color: rgba(254, 225, 231, 0.25);
-            border-color: var(--pink-accent-border);
-        }
-
-        .focus-item.completed .focus-input {
-            text-decoration: line-through;
-            color: var(--text-subtle);
-        }
-
-        .toggle-btn {
             background: transparent;
+            font-family: 'Alice', serif;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            transition: opacity 0.15s ease;
+        }
+
+        .priority-input::placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .priority-item.completed .priority-input {
+            text-decoration: line-through;
+            opacity: 0.55;
+        }
+
+        .btn-flower {
+            background: none;
             border: none;
+            font-size: 1.2rem;
             cursor: pointer;
-            font-size: 0.92rem;
-            padding: 3px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
+            opacity: 0.35;
+            transition: transform 0.15s ease, opacity 0.15s ease;
             user-select: none;
         }
 
-        .toggle-btn:hover {
+        .priority-item.completed .btn-flower {
+            opacity: 1;
             transform: scale(1.15);
         }
 
-        .toggle-btn:active {
-            transform: scale(0.92);
-        }
-
+        /* Footer Row */
         .footer-row {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            padding-top: 4px;
+        }
+
+        .counter-group {
+            display: flex;
+            align-items: center;
             gap: 8px;
-            border-top: 1px solid rgba(245, 225, 228, 0.5);
-            padding-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .counter-pill {
+            background: var(--bg-pill);
+            color: var(--text-dark);
+            font-weight: bold;
             font-size: 0.82rem;
+            padding: 5px 12px;
+            border-radius: 8px;
         }
 
-        .progress-text {
-            color: var(--text-subtle);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .progress-badge {
-            font-weight: 600;
-            color: var(--berry-text);
-            background: var(--pink-accent-bg);
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            border: 1px solid var(--pink-accent-border);
-        }
-
-        .actions-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        button.action-btn {
-            font-family: 'Alice', serif;
-            font-size: 0.78rem;
-            border: 1px solid var(--card-border);
-            border-radius: 7px;
-            background: rgba(255, 255, 255, 0.88);
-            color: var(--text-subtle);
-            cursor: pointer;
-            padding: 4px 9px;
-            transition: all 0.2s ease;
-            outline: none;
-            user-select: none;
-        }
-
-        button.action-btn:hover {
-            background: #ffffff;
-            border-color: var(--pink-accent-border);
-            color: var(--berry-text);
-            transform: translateY(-1px);
-        }
-
-        button.action-btn.confirming {
-            background-color: #FDF2F4;
-            border-color: #F3C4CD;
-            color: #8C2440;
-            font-weight: 600;
-        }
-
-        /* Toast Popup Overlay */
-        .toast-msg {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(51, 35, 39, 0.92);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #ffffff;
-            font-size: 0.74rem;
-            padding: 4px 12px;
+        .btn-clear {
+            background: var(--bg-card-item);
+            border: 1px solid var(--border-soft);
             border-radius: 10px;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+            padding: 6px 14px;
+            font-family: 'Alice', serif;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
         }
 
-        .toast-msg.show {
-            opacity: 1;
-            bottom: -22px;
+        .btn-clear:hover {
+            border-color: var(--bg-top-banner);
+            color: var(--text-dark);
         }
     </style>
 </head>
 <body>
 
-<div class="glass-widget-card">
-    <!-- Header with Month Title & Month Navigator -->
-    <div class="header-row">
-        <h1 class="header-title" id="monthTitle">
-            <span class="flower-icon">🌸</span> <span id="monthNameText">SEPTEMBER 2026 FOCUS</span>
-        </h1>
-        <div class="month-nav-group">
-            <button class="nav-btn" onclick="window.changeMonth(-1)" title="Previous Month">‹</button>
-            <button class="nav-btn" onclick="window.resetToCurrentMonth()" title="Current Month">●</button>
-            <button class="nav-btn" onclick="window.changeMonth(1)" title="Next Month">›</button>
+<div class="widget-card">
+    <!-- Solid Pink Header Block (#F8D2E3) -->
+    <div class="top-banner">
+        <div class="header-row">
+            <div class="header-title">
+                <span>🌸</span> <span id="monthTitle">SEPTEMBER 2026 FOCUS</span>
+            </div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="changeMonth(-1)">‹</button>
+                <button class="btn-nav" onclick="resetToCurrentMonth()">•</button>
+                <button class="btn-nav" onclick="changeMonth(1)">›</button>
+            </div>
+        </div>
+        <div class="banner-subrow">
+            <div class="banner-left">
+                <span>🎯</span> 3 Main Priorities
+            </div>
+            <div class="banner-right">
+                Keep it gentle & focused
+            </div>
         </div>
     </div>
 
-    <!-- Soft Pink Guidance Banner (#FEE1E7) -->
-    <div class="banner-pink">
-        <span>🎯 3 Main Priorities</span>
-        <span class="banner-subtitle">Keep it gentle & focused</span>
-    </div>
+    <!-- Soft Cream Pink Body (#FFF0F3) -->
+    <div class="content-body">
+        <div class="priority-list">
+            <div class="priority-item" id="item-0">
+                <div class="priority-left">
+                    <span class="number-pill">01</span>
+                    <input type="text" class="priority-input" id="input-0" placeholder="Priority 1..." oninput="saveData()">
+                </div>
+                <button class="btn-flower" onclick="toggleComplete(0)" title="Toggle completion">🌸</button>
+            </div>
 
-    <!-- 3 Uniform Focus Slot Cards -->
-    <div class="focus-slots-container">
-        <!-- Focus Slot 1 -->
-        <div class="focus-item" id="focusItem0">
-            <span class="badge-number">01</span>
-            <input type="text" class="focus-input" id="input0" placeholder="Primary monthly goal..." oninput="window.handleInput(0)" />
-            <button class="toggle-btn" id="toggle0" onclick="window.toggleComplete(0)" title="Toggle Completion">🌸</button>
+            <div class="priority-item" id="item-1">
+                <div class="priority-left">
+                    <span class="number-pill">02</span>
+                    <input type="text" class="priority-input" id="input-1" placeholder="Priority 2..." oninput="saveData()">
+                </div>
+                <button class="btn-flower" onclick="toggleComplete(1)" title="Toggle completion">🌸</button>
+            </div>
+
+            <div class="priority-item" id="item-2">
+                <div class="priority-left">
+                    <span class="number-pill">03</span>
+                    <input type="text" class="priority-input" id="input-2" placeholder="Priority 3..." oninput="saveData()">
+                </div>
+                <button class="btn-flower" onclick="toggleComplete(2)" title="Toggle completion">🌸</button>
+            </div>
         </div>
 
-        <!-- Focus Slot 2 -->
-        <div class="focus-item" id="focusItem1">
-            <span class="badge-number">02</span>
-            <input type="text" class="focus-input" id="input1" placeholder="Secondary priority..." oninput="window.handleInput(1)" />
-            <button class="toggle-btn" id="toggle1" onclick="window.toggleComplete(1)" title="Toggle Completion">🌸</button>
-        </div>
-
-        <!-- Focus Slot 3 -->
-        <div class="focus-item" id="focusItem2">
-            <span class="badge-number">03</span>
-            <input type="text" class="focus-input" id="input2" placeholder="Life or health focus..." oninput="window.handleInput(2)" />
-            <button class="toggle-btn" id="toggle2" onclick="window.toggleComplete(2)" title="Toggle Completion">🌸</button>
-        </div>
-    </div>
-
-    <!-- Footer Progress Counter & Clear Action -->
-    <div class="footer-row">
-        <div class="progress-text">
-            <span class="progress-badge" id="completedCountBadge">0 / 3</span>
-            <span id="progressMessageText">done this month</span>
-        </div>
-        <div class="actions-group">
-            <button class="action-btn" id="resetBtn" onclick="window.handleClearMonth()">
-                🧹 clear
-            </button>
+        <div class="footer-row">
+            <div class="counter-group">
+                <span class="counter-pill" id="counterPill">0 / 3</span>
+                <span>done this month</span>
+            </div>
+            <button class="btn-clear" onclick="clearAll()">🧹 clear</button>
         </div>
     </div>
-
-    <!-- Toast Overlay -->
-    <div class="toast-msg" id="toastMsg">Progress saved ✨</div>
 </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+<script>
+    let currentDate = new Date(2026, 8, 1);
+    let state = {
+        inputs: ["Finish my Notion for SALE", "DATING", "my digital products"],
+        completed: [false, false, false]
+    };
 
-    // Application State
-    const MONTH_NAMES = [
-        "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
-        "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
-    ];
-
-    let currentDate = new Date();
-    let viewedDate = new Date();
-
-    // Key format for monthly storage e.g., "2026_09"
-    function getMonthKey(dateObj) {
-        const y = dateObj.getFullYear();
-        const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-        return `${y}_${m}`;
-    }
-
-    // Default structure for a month
-    function createEmptyMonthData() {
-        return [
-            { text: '', done: false },
-            { text: '', done: false },
-            { text: '', done: false }
-        ];
-    }
-
-    // Storage memory cache
-    window.allMonthlyData = {};
-
-    let db = null;
-    let auth = null;
-    let userDocRef = null;
-    let resetTimeout = null;
-
-    const STORAGE_KEY = 'notion_monthly_focus_v2';
-
-    // Firebase Configurations
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'monthly-focus-glass';
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-    function safeLoadLocal() {
+    function safeLoadData() {
         try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) {
-                window.allMonthlyData = JSON.parse(raw);
+            const stored = localStorage.getItem('monthly_focus_widget_v2');
+            if (stored) {
+                state = JSON.parse(stored);
             }
         } catch (e) {
-            console.warn("LocalStorage blocked by iframe environment. Running in-memory state.", e);
+            console.warn("LocalStorage unavailable, using default state.", e);
         }
     }
 
-    function safeSaveLocal() {
+    function saveData() {
+        for (let i = 0; i < 3; i++) {
+            const inputEl = document.getElementById(`input-${i}`);
+            if (inputEl) state.inputs[i] = inputEl.value;
+        }
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(window.allMonthlyData));
+            localStorage.setItem('monthly_focus_widget_v2', JSON.stringify(state));
         } catch (e) {
-            console.warn("Unable to write LocalStorage in iframe context.", e);
+            console.warn("Unable to save state.", e);
         }
+        updateCounter();
     }
 
-    // Save to Firebase & LocalStorage
-    async function saveCurrentMonthState() {
-        safeSaveLocal();
-        if (db && userDocRef && auth?.currentUser) {
-            try {
-                await setDoc(userDocRef, {
-                    monthlyData: window.allMonthlyData,
-                    updatedAt: new Date().toISOString()
-                }, { merge: true });
-            } catch (err) {
-                console.warn("Firestore save error:", err);
-            }
-        }
-    }
+    function render() {
+        const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+        const titleEl = document.getElementById('monthTitle');
+        titleEl.innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()} FOCUS`;
 
-    async function initFirebase() {
-        if (!firebaseConfig) return;
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-
-            if (initialAuthToken) {
-                await signInWithCustomToken(auth, initialAuthToken);
+        for (let i = 0; i < 3; i++) {
+            const inputEl = document.getElementById(`input-${i}`);
+            const itemEl = document.getElementById(`item-${i}`);
+            
+            inputEl.value = state.inputs[i] || "";
+            if (state.completed[i]) {
+                itemEl.classList.add('completed');
             } else {
-                await signInAnonymously(auth);
-            }
-
-            const user = auth.currentUser;
-            if (user) {
-                userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'data', 'monthlyFocus');
-                
-                onSnapshot(userDocRef, (snapshot) => {
-                    if (snapshot.exists()) {
-                        const data = snapshot.data();
-                        if (data.monthlyData) {
-                            window.allMonthlyData = { ...window.allMonthlyData, ...data.monthlyData };
-                            updateUI();
-                        }
-                    }
-                }, (error) => {
-                    console.warn("Firestore snapshot error:", error);
-                });
-            }
-        } catch (e) {
-            console.warn("Firebase initialization skipped/failed. Running with local state.", e);
-        }
-    }
-
-    function getCurrentMonthItems() {
-        const key = getMonthKey(viewedDate);
-        if (!window.allMonthlyData[key]) {
-            window.allMonthlyData[key] = createEmptyMonthData();
-        }
-        return window.allMonthlyData[key];
-    }
-
-    function updateUI() {
-        // Month Title
-        const monthNameText = document.getElementById('monthNameText');
-        if (monthNameText) {
-            const mName = MONTH_NAMES[viewedDate.getMonth()];
-            const yr = viewedDate.getFullYear();
-            monthNameText.innerText = `${mName} ${yr} FOCUS`;
-        }
-
-        const items = getCurrentMonthItems();
-        let completedCount = 0;
-
-        items.forEach((item, index) => {
-            const inputEl = document.getElementById(`input${index}`);
-            const itemContainer = document.getElementById(`focusItem${index}`);
-            const toggleBtn = document.getElementById(`toggle${index}`);
-
-            if (inputEl) {
-                if (inputEl !== document.activeElement) {
-                    inputEl.value = item.text || '';
-                }
-            }
-
-            if (item.done) {
-                completedCount++;
-                itemContainer.classList.add('completed');
-                toggleBtn.innerText = '✨';
-            } else {
-                itemContainer.classList.remove('completed');
-                toggleBtn.innerText = '🌸';
-            }
-        });
-
-        // Update Progress Counter
-        const badge = document.getElementById('completedCountBadge');
-        const textMsg = document.getElementById('progressMessageText');
-
-        if (badge) badge.innerText = `${completedCount} / 3`;
-        if (textMsg) {
-            if (completedCount === 3) {
-                textMsg.innerText = "all goals completed! 🎉";
-            } else if (completedCount > 0) {
-                textMsg.innerText = "priorities accomplished ✨";
-            } else {
-                textMsg.innerText = "done this month";
+                itemEl.classList.remove('completed');
             }
         }
+        updateCounter();
     }
 
-    // Input changes
-    window.handleInput = function(index) {
-        const items = getCurrentMonthItems();
-        const inputEl = document.getElementById(`input${index}`);
-        items[index].text = inputEl.value;
-        saveCurrentMonthState();
-    };
-
-    // Completion Toggle
-    window.toggleComplete = function(index) {
-        const items = getCurrentMonthItems();
-        items[index].done = !items[index].done;
-        saveCurrentMonthState();
-        updateUI();
-
-        if (items[index].done) {
-            showToast("Priority completed! ✨");
-        }
-    };
-
-    // Month Navigation Controls
-    window.changeMonth = function(offset) {
-        viewedDate.setMonth(viewedDate.getMonth() + offset);
-        updateUI();
-    };
-
-    window.resetToCurrentMonth = function() {
-        viewedDate = new Date();
-        updateUI();
-        showToast("Returned to current month 📅");
-    };
-
-    // Clear Month Action with Notion-Safe 2-Step Confirmation
-    window.handleClearMonth = function() {
-        const resetBtn = document.getElementById('resetBtn');
-
-        if (!resetBtn.classList.contains('confirming')) {
-            resetBtn.classList.add('confirming');
-            resetBtn.innerText = 'Confirm Clear?';
-
-            resetTimeout = setTimeout(() => {
-                revertClearBtn();
-            }, 3500);
-        } else {
-            clearTimeout(resetTimeout);
-            revertClearBtn();
-
-            const key = getMonthKey(viewedDate);
-            window.allMonthlyData[key] = createEmptyMonthData();
-            saveCurrentMonthState();
-            updateUI();
-            showToast("Month priorities cleared 🧹");
-        }
-    };
-
-    function revertClearBtn() {
-        const resetBtn = document.getElementById('resetBtn');
-        if (resetBtn) {
-            resetBtn.classList.remove('confirming');
-            resetBtn.innerText = '🧹 clear';
-        }
+    function toggleComplete(index) {
+        state.completed[index] = !state.completed[index];
+        saveData();
+        render();
     }
 
-    function showToast(message) {
-        const toast = document.getElementById('toastMsg');
-        if (toast) {
-            toast.innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2200);
-        }
+    function updateCounter() {
+        const count = state.completed.filter(Boolean).length;
+        document.getElementById('counterPill').innerText = `${count} / 3`;
     }
 
-    async function initWidget() {
-        safeLoadLocal();
-        await initFirebase();
-        updateUI();
+    function clearAll() {
+        state.completed = [false, false, false];
+        saveData();
+        render();
     }
 
-    // CRITICAL FIX FOR NOTION & GITHUB PAGES CDN:
-    // Run initialization immediately if DOM is already ready when embedded!
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initWidget);
-    } else {
-        initWidget();
+    function changeMonth(delta) {
+        currentDate.setMonth(currentDate.getMonth() + delta);
+        render();
     }
+
+    function resetToCurrentMonth() {
+        currentDate = new Date(2026, 8, 1);
+        render();
+    }
+
+    safeLoadData();
+    render();
 </script>
+
 </body>
 </html>
