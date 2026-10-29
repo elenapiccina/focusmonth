@@ -61,7 +61,7 @@
             z-index: 1;
         }
 
-        /* Solid Header Block (#F8D2E3) */
+        /* Top Header Banner */
         .top-banner {
             background-color: var(--bg-top-banner);
             padding: 18px 22px;
@@ -169,7 +169,7 @@
             font-size: 0.85rem;
         }
 
-        /* Widget Main Body (#FFF0F3) */
+        /* Widget Body Content */
         .content-body {
             background-color: var(--bg-body);
             padding: 20px;
@@ -178,7 +178,7 @@
         .priority-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 18px;
         }
 
@@ -186,10 +186,10 @@
             background: var(--bg-card-item);
             border: 1px solid var(--border-soft);
             border-radius: 14px;
-            padding: 10px 14px;
+            padding: 12px 14px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             transition: all 0.25s ease;
         }
 
@@ -230,8 +230,8 @@
             outline: none;
             background: transparent;
             font-family: 'Alice', serif;
-            font-size: 0.95rem;
-            color: var(--text-main);
+            font-size: 0.98rem;
+            color: var(--text-dark);
             transition: opacity 0.15s ease;
         }
 
@@ -256,18 +256,20 @@
             gap: 8px;
         }
 
-        /* ⚡ Step Toggle Button */
         .btn-step-toggle {
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-family: 'Alice', serif;
             color: var(--text-dark);
             background: var(--bg-pill);
             border: 1px solid var(--border-soft);
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .btn-step-toggle:hover {
@@ -275,10 +277,26 @@
             border-color: var(--bg-top-banner);
         }
 
-        /* 2-Min Micro Step Drawer */
+        .btn-flower {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0.35;
+            transition: transform 0.2s cubic-bezier(.3,1.6,.5,1), opacity 0.2s;
+            user-select: none;
+            padding: 2px;
+        }
+
+        .priority-item.completed .btn-flower {
+            opacity: 1;
+            transform: scale(1.25) rotate(12deg);
+        }
+
+        /* Dynamic Subtask Drawer */
         .step-drawer {
             display: none;
-            padding-top: 8px;
+            padding-top: 10px;
             border-top: 1px dashed var(--border-soft);
             margin-top: 4px;
         }
@@ -293,54 +311,142 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .subtask-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
         .step-label {
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--text-dark);
             opacity: 0.85;
-            margin-bottom: 3px;
         }
 
-        .step-input {
+        .subtask-progress-bar {
+            height: 4px;
             width: 100%;
-            border: none;
-            outline: none;
+            background: rgba(242, 211, 224, 0.4);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .subtask-progress-fill {
+            height: 100%;
+            background: #f7b3cb;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .subtask-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .subtask-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             background: rgba(252, 232, 240, 0.4);
             border-radius: 8px;
-            padding: 6px 10px;
+            padding: 4px 8px;
+            transition: background 0.15s ease;
+        }
+
+        .subtask-item:hover {
+            background: rgba(252, 232, 240, 0.8);
+        }
+
+        .subtask-check {
+            width: 16px;
+            height: 16px;
+            accent-color: #c4466f;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .subtask-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
             font-family: 'Alice', serif;
             font-size: 0.85rem;
             color: var(--text-dark);
         }
 
-        .step-input::placeholder {
+        .subtask-item.completed .subtask-input {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .btn-del-subtask {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: color 0.15s;
+        }
+
+        .btn-del-subtask:hover {
+            color: #c4466f;
+        }
+
+        .add-subtask-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .add-subtask-input {
+            flex: 1;
+            border: 1px solid var(--border-soft);
+            outline: none;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-family: 'Alice', serif;
+            font-size: 0.82rem;
+            color: var(--text-dark);
+        }
+
+        .add-subtask-input::placeholder {
             color: var(--text-muted);
             font-style: italic;
         }
 
-        .btn-flower {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
+        .btn-add-subtask {
+            background: var(--bg-pill);
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-family: 'Alice', serif;
+            font-size: 0.8rem;
+            color: var(--text-dark);
             cursor: pointer;
-            opacity: 0.35;
-            transition: transform 0.2s cubic-bezier(.3,1.6,.5,1), opacity 0.2s;
-            user-select: none;
-            padding: 2px;
+            transition: all 0.15s ease;
         }
 
-        .priority-item.completed .btn-flower {
-            opacity: 1;
-            transform: scale(1.25) rotate(12deg);
+        .btn-add-subtask:hover {
+            background: #ffffff;
+            border-color: var(--bg-top-banner);
         }
 
-        /* Footer Row */
+        /* Footer Section */
         .footer-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 4px;
+            padding-top: 6px;
         }
 
         .counter-group {
@@ -386,7 +492,7 @@
 <canvas id="fx" aria-hidden="true"></canvas>
 
 <div class="widget-card">
-    <!-- Solid Pink Header Block (#F8D2E3) -->
+    <!-- Header Block -->
     <div class="top-banner">
         <div class="header-row">
             <div class="header-title">
@@ -399,7 +505,7 @@
                     <g transform="rotate(300 40 40)"><ellipse class="pt" cx="40" cy="22" rx="9" ry="16"/></g>
                     <circle class="ctr" cx="40" cy="40" r="7"/>
                 </svg>
-                <span id="monthTitle">SEPTEMBER 2026 FOCUS</span>
+                <span id="monthTitle">OCTOBER 2026 FOCUS</span>
             </div>
             <div class="nav-controls">
                 <button class="btn-nav" onclick="changeMonth(-1)">‹</button>
@@ -417,10 +523,10 @@
         </div>
     </div>
 
-    <!-- Soft Cream Pink Body (#FFF0F3) -->
+    <!-- Main Content Body -->
     <div class="content-body">
         <div class="priority-list">
-            <!-- Item 1 -->
+            <!-- Priority 1 -->
             <div class="priority-item" id="item-0">
                 <div class="priority-row-main">
                     <div class="priority-left">
@@ -428,17 +534,26 @@
                         <input type="text" class="priority-input" id="input-0" placeholder="Priority 1..." oninput="saveData()">
                     </div>
                     <div class="action-group">
-                        <button class="btn-step-toggle" onclick="toggleDrawer(0)">⚡ step</button>
+                        <button class="btn-step-toggle" id="toggle-btn-0" onclick="toggleDrawer(0)">⚡ steps</button>
                         <button class="btn-flower" id="btn-0" onclick="toggleComplete(0, event)" title="Toggle completion">🌸</button>
                     </div>
                 </div>
                 <div class="step-drawer" id="drawer-0">
-                    <div class="step-label">2-Min Micro Step:</div>
-                    <input type="text" class="step-input" id="micro-0" placeholder="Add a 2-minute step..." oninput="saveData()">
+                    <div class="subtask-header">
+                        <div class="step-label">Subtask Breakdown</div>
+                    </div>
+                    <div class="subtask-progress-bar">
+                        <div class="subtask-progress-fill" id="progress-0"></div>
+                    </div>
+                    <div class="subtask-list" id="subtasks-container-0"></div>
+                    <div class="add-subtask-row">
+                        <input type="text" class="add-subtask-input" id="add-input-0" placeholder="Add a micro subtask..." onkeydown="handleSubtaskKey(event, 0)">
+                        <button class="btn-add-subtask" onclick="addSubtaskFromInput(0)">+ Add</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Item 2 -->
+            <!-- Priority 2 -->
             <div class="priority-item" id="item-1">
                 <div class="priority-row-main">
                     <div class="priority-left">
@@ -446,17 +561,26 @@
                         <input type="text" class="priority-input" id="input-1" placeholder="Priority 2..." oninput="saveData()">
                     </div>
                     <div class="action-group">
-                        <button class="btn-step-toggle" onclick="toggleDrawer(1)">⚡ step</button>
+                        <button class="btn-step-toggle" id="toggle-btn-1" onclick="toggleDrawer(1)">⚡ steps</button>
                         <button class="btn-flower" id="btn-1" onclick="toggleComplete(1, event)" title="Toggle completion">🌸</button>
                     </div>
                 </div>
                 <div class="step-drawer" id="drawer-1">
-                    <div class="step-label">2-Min Micro Step:</div>
-                    <input type="text" class="step-input" id="micro-1" placeholder="Add a 2-minute step..." oninput="saveData()">
+                    <div class="subtask-header">
+                        <div class="step-label">Subtask Breakdown</div>
+                    </div>
+                    <div class="subtask-progress-bar">
+                        <div class="subtask-progress-fill" id="progress-1"></div>
+                    </div>
+                    <div class="subtask-list" id="subtasks-container-1"></div>
+                    <div class="add-subtask-row">
+                        <input type="text" class="add-subtask-input" id="add-input-1" placeholder="Add a micro subtask..." onkeydown="handleSubtaskKey(event, 1)">
+                        <button class="btn-add-subtask" onclick="addSubtaskFromInput(1)">+ Add</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Item 3 -->
+            <!-- Priority 3 -->
             <div class="priority-item" id="item-2">
                 <div class="priority-row-main">
                     <div class="priority-left">
@@ -464,13 +588,22 @@
                         <input type="text" class="priority-input" id="input-2" placeholder="Priority 3..." oninput="saveData()">
                     </div>
                     <div class="action-group">
-                        <button class="btn-step-toggle" onclick="toggleDrawer(2)">⚡ step</button>
+                        <button class="btn-step-toggle" id="toggle-btn-2" onclick="toggleDrawer(2)">⚡ steps</button>
                         <button class="btn-flower" id="btn-2" onclick="toggleComplete(2, event)" title="Toggle completion">🌸</button>
                     </div>
                 </div>
                 <div class="step-drawer" id="drawer-2">
-                    <div class="step-label">2-Min Micro Step:</div>
-                    <input type="text" class="step-input" id="micro-2" placeholder="Add a 2-minute step..." oninput="saveData()">
+                    <div class="subtask-header">
+                        <div class="step-label">Subtask Breakdown</div>
+                    </div>
+                    <div class="subtask-progress-bar">
+                        <div class="subtask-progress-fill" id="progress-2"></div>
+                    </div>
+                    <div class="subtask-list" id="subtasks-container-2"></div>
+                    <div class="add-subtask-row">
+                        <input type="text" class="add-subtask-input" id="add-input-2" placeholder="Add a micro subtask..." onkeydown="handleSubtaskKey(event, 2)">
+                        <button class="btn-add-subtask" onclick="addSubtaskFromInput(2)">+ Add</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -486,10 +619,26 @@
 </div>
 
 <script>
-    let currentDate = new Date(2026, 8, 1);
+    let currentDate = new Date(2026, 9, 1);
+    
+    // Updated state schema with subtask arrays
     let state = {
-        inputs: ["Finish my Notion for SALE", "DATING", "my digital products"],
-        micros: ["Clean up template drafts", "Open 1 profile app", "Set up gumroad link"],
+        inputs: ["Finish my Notion for SALE", "DATING & SOCIALS", "Launch digital products"],
+        subtasks: [
+            [
+                { text: "Clean up template drafts", completed: true },
+                { text: "Write sales page copy", completed: false },
+                { text: "Export final PDF guides", completed: false }
+            ],
+            [
+                { text: "Update profile bio & photos", completed: true },
+                { text: "Plan 1 weekend outing", completed: false }
+            ],
+            [
+                { text: "Set up Gumroad checkout link", completed: false },
+                { text: "Draft announcement newsletter", completed: false }
+            ]
+        ],
         completed: [false, false, false],
         drawersOpen: [false, false, false]
     };
@@ -528,7 +677,7 @@
         tone(f * 3, t, .25, v * .12);
     }
 
-    /* Particle Burst Canvas */
+    /* Canvas Particle Effects */
     const cv = document.getElementById('fx'), cx = cv.getContext('2d');
     let P = [], raf = 0;
     const COL = ['#f4a9c2', '#e87ba4', '#ffd1e1', '#f2b84b', '#bfe3c9', '#ffffff'];
@@ -609,12 +758,13 @@
         });
     }
 
-    /* Logic */
+    /* LocalStorage and State Management */
     function safeLoadData() {
         try {
-            const stored = localStorage.getItem('monthly_focus_widget_v3');
+            const stored = localStorage.getItem('monthly_focus_widget_v4');
             if (stored) {
-                state = Object.assign(state, JSON.parse(stored));
+                const parsed = JSON.parse(stored);
+                state = Object.assign(state, parsed);
             }
         } catch (e) {
             console.warn("LocalStorage unavailable, using default state.", e);
@@ -624,12 +774,10 @@
     function saveData() {
         for (let i = 0; i < 3; i++) {
             const inputEl = document.getElementById(`input-${i}`);
-            const microEl = document.getElementById(`micro-${i}`);
             if (inputEl) state.inputs[i] = inputEl.value;
-            if (microEl) state.micros[i] = microEl.value;
         }
         try {
-            localStorage.setItem('monthly_focus_widget_v3', JSON.stringify(state));
+            localStorage.setItem('monthly_focus_widget_v4', JSON.stringify(state));
         } catch (e) {
             console.warn("Unable to save state.", e);
         }
@@ -657,6 +805,110 @@
         }
     }
 
+    /* Subtask Checklist Actions */
+    function handleSubtaskKey(e, priorityIndex) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addSubtaskFromInput(priorityIndex);
+        }
+    }
+
+    function addSubtaskFromInput(priorityIndex) {
+        const inputEl = document.getElementById(`add-input-${priorityIndex}`);
+        if (!inputEl) return;
+        const text = inputEl.value.trim();
+        if (!text) return;
+
+        ac();
+        tone(780, 0, .05, .05, 'sine');
+        
+        if (!state.subtasks[priorityIndex]) {
+            state.subtasks[priorityIndex] = [];
+        }
+        state.subtasks[priorityIndex].push({ text: text, completed: false });
+        inputEl.value = '';
+        
+        saveData();
+        renderSubtasks(priorityIndex);
+    }
+
+    function updateSubtaskText(priorityIndex, subtaskIndex, text) {
+        if (state.subtasks[priorityIndex] && state.subtasks[priorityIndex][subtaskIndex]) {
+            state.subtasks[priorityIndex][subtaskIndex].text = text;
+            saveData();
+        }
+    }
+
+    function toggleSubtaskComplete(priorityIndex, subtaskIndex, e) {
+        ac();
+        const list = state.subtasks[priorityIndex];
+        if (!list || !list[subtaskIndex]) return;
+
+        list[subtaskIndex].completed = !list[subtaskIndex].completed;
+        
+        if (list[subtaskIndex].completed) {
+            tone(880, 0, .08, .06, 'sine');
+            if (e && e.target) {
+                const rect = e.target.getBoundingClientRect();
+                burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 8, false);
+            }
+        } else {
+            tone(440, 0, .08, .04, 'triangle');
+        }
+
+        saveData();
+        renderSubtasks(priorityIndex);
+    }
+
+    function deleteSubtask(priorityIndex, subtaskIndex) {
+        ac();
+        tone(350, 0, .06, .05, 'triangle');
+        if (state.subtasks[priorityIndex]) {
+            state.subtasks[priorityIndex].splice(subtaskIndex, 1);
+            saveData();
+            renderSubtasks(priorityIndex);
+        }
+    }
+
+    function renderSubtasks(priorityIndex) {
+        const container = document.getElementById(`subtasks-container-${priorityIndex}`);
+        if (!container) return;
+
+        const list = state.subtasks[priorityIndex] || [];
+        container.innerHTML = '';
+
+        let doneCount = 0;
+
+        list.forEach((st, idx) => {
+            if (st.completed) doneCount++;
+
+            const itemDiv = document.createElement('div');
+            itemDiv.className = `subtask-item ${st.completed ? 'completed' : ''}`;
+
+            itemDiv.innerHTML = `
+                <input type="checkbox" class="subtask-check" ${st.completed ? 'checked' : ''} 
+                    onchange="toggleSubtaskComplete(${priorityIndex}, ${idx}, event)">
+                <input type="text" class="subtask-input" value="${st.text.replace(/"/g, '&quot;')}" 
+                    oninput="updateSubtaskText(${priorityIndex}, ${idx}, this.value)">
+                <button class="btn-del-subtask" onclick="deleteSubtask(${priorityIndex}, ${idx})" title="Delete subtask">✕</button>
+            `;
+            container.appendChild(itemDiv);
+        });
+
+        // Update step toggle button badge
+        const toggleBtn = document.getElementById(`toggle-btn-${priorityIndex}`);
+        if (toggleBtn) {
+            toggleBtn.innerText = list.length > 0 ? `⚡ ${doneCount}/${list.length} steps` : '⚡ steps';
+        }
+
+        // Update subtask progress fill
+        const progressEl = document.getElementById(`progress-${priorityIndex}`);
+        if (progressEl) {
+            const pct = list.length > 0 ? (doneCount / list.length) * 100 : 0;
+            progressEl.style.width = `${pct}%`;
+        }
+    }
+
     function render() {
         const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
         const titleEl = document.getElementById('monthTitle');
@@ -664,17 +916,17 @@
 
         for (let i = 0; i < 3; i++) {
             const inputEl = document.getElementById(`input-${i}`);
-            const microEl = document.getElementById(`micro-${i}`);
             const itemEl = document.getElementById(`item-${i}`);
             
             if (inputEl) inputEl.value = state.inputs[i] || "";
-            if (microEl) microEl.value = state.micros[i] || "";
 
             if (state.completed[i]) {
                 itemEl.classList.add('completed');
             } else {
                 itemEl.classList.remove('completed');
             }
+
+            renderSubtasks(i);
         }
         renderDrawers();
         updateCounter();
@@ -740,7 +992,7 @@
 
     function resetToCurrentMonth() {
         ac();
-        currentDate = new Date(2026, 8, 1);
+        currentDate = new Date(2026, 9, 1);
         tone(700, 0, .08, .05, 'triangle');
         render();
     }
